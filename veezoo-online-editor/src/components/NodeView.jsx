@@ -26,12 +26,10 @@ class NodeView extends Component {
     this.deleteCode(id)
     t.path[3].remove()
     var opened = this.state.openedFiles;
-    console.log(opened)
     if(opened.length>0){
-      this.selectCode(opened[0].id.toString())
-      var a = this.highlightSelectedTab(opened[0].id)
-      console.log(a)
-      this.highlightSelectedById(opened[0].id)
+      this.selectCode(opened[0].id.toString());
+      this.highlightSelectedTab(opened[0].id);
+      this.highlightSelectedById(opened[0].id);
     }else{
       var editor = document.querySelector('.CodeMirror').CodeMirror;
       editor.setValue('')
@@ -95,7 +93,6 @@ class NodeView extends Component {
           self.selectCode(resp.id)   
           self.appendTab(resp.id) 
           self.highlightSelectedTab(resp.id) 
-          console.log(arrayState)
         return 1;
       })
       .catch(function (error) {
