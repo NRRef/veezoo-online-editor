@@ -6,6 +6,9 @@
     position: fixed;
     
 }
+#code-area{
+    display:none;
+}
 .CodeMirror {
     border-radius: 0px !important;
 }

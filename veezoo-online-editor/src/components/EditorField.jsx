@@ -18,13 +18,13 @@ class EditorField extends Component {
         return(
           <>
             <div id='editor-area'>
-            <CodeMirror
-                options={{
-                    theme: 'material',
-                    keyMap: 'sublime',
-                    mode: 'text/x-java',
-                }}
-                />        
+              <CodeMirror
+                  options={{
+                      theme: 'material',
+                      keyMap: 'sublime',
+                      mode: 'text/x-java',
+                  }}
+                  />        
             </div>
           </>
         )
