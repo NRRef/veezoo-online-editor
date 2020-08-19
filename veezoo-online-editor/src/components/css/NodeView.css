@@ -1,0 +1,45 @@
+div>ul{
+    padding:0px;
+}
+ul{
+    list-style-type: none;
+    padding-inline-start: 15px;
+    color: rgb(184, 184, 184);
+    
+}
+li{
+    padding-inline-start: 15px;
+}
+ul>li{
+    padding-inline-start: 30px;
+}
+ul>ul>ul{
+    
+    border-left: solid grey 1px
+}
+
+ul>i{
+    font-size: 20px;
+    padding-right: 10px;
+}
+li>i{
+    font-size: 20px;
+    padding-right: 10px;
+}
+a.nodeLink{
+    cursor: pointer;
+}
+li:hover{
+    background-color: rgba(133, 133, 133,0.4);
+}
+i.collapse{
+    padding-right: 0px!important;
+    font-size: 20px;
+}
+.material-icons{
+    display: inline-flex;
+    vertical-align: top;
+}
+.fileTreeRootNode{
+    overflow: auto;
+}

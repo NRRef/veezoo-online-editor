@@ -12,7 +12,7 @@ class TopBar extends Component {
             <div className='control-bar'>
 
               <span id="logo">
-                <img id="logo-img" height="40" src='/logo192.png' />
+                <img id="logo-img" height="40" src='/logo192.png' alt="node"/>
                 <span id="logo-title">Online Editor</span>
               </span>
 
