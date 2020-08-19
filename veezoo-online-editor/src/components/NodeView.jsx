@@ -15,11 +15,62 @@ class NodeView extends Component {
         const jsonTree = response.data;
         self.treeMount(jsonTree)
         self.setState({ fileTree: jsonTree });
+        
       })
       .catch(function (error) {
         console.log(error);
       });
   };
+  closeTab = (t) => {
+    var id = t.path[1].getAttribute('data-id')
+    this.deleteCode(id)
+    t.path[3].remove()
+    var opened = this.state.openedFiles;
+    console.log(opened)
+    if(opened.length>0){
+      this.selectCode(opened[0].id.toString())
+      var a = this.highlightSelectedTab(opened[0].id)
+      console.log(a)
+      this.highlightSelectedById(opened[0].id)
+    }else{
+      var editor = document.querySelector('.CodeMirror').CodeMirror;
+      editor.setValue('')
+    }
+    
+  }
+  clickTab = (t) => {
+    var id = t.path[0].getAttribute('data-id')
+    this.highlightSelectedTab(id);
+    this.highlightSelectedById(id)
+    this.selectCode(id);
+    
+  }
+  appendTab = (id) => {
+    var elem = this.getCode(id);
+    var tabWrpr = document.getElementById('tab-wrapper');
+    var tab = document.createElement('span');
+    var tabTitle = document.createElement('span');
+    var tabClose = document.createElement('span');
+    var aClose = document.createElement('a');
+    var iClose = document.createElement('i');
+    aClose.onclick = this.closeTab;
+    aClose.setAttribute('data-id', elem.id);
+    iClose.classList.add('material-icons');
+    iClose.innerText = 'close'; 
+    aClose.appendChild(iClose);
+    tabClose.appendChild(aClose)
+    tab.classList.add('tab');
+    tab.setAttribute('data-id', elem.id);
+    tabTitle.classList.add('tab-title');
+    tabTitle.innerText = elem.name;  
+    tabClose.classList.add('tab-close');
+    tab.onclick = this.clickTab;
+    tab.appendChild(tabTitle);
+    tab.appendChild(tabClose);
+    tabWrpr.appendChild(tab);
+    
+    
+  }
   collapseTree = (t) => {
     t.path[1].classList.toggle("close");
     t.path[1].classList.toggle("open");
@@ -30,6 +81,7 @@ class NodeView extends Component {
     let self = this;
     if(self.checkIfFileOpened(id)){
       self.selectCode(id)
+      self.highlightSelectedTab(id) 
       return 0;
     }else{
     await axios
@@ -40,7 +92,10 @@ class NodeView extends Component {
           var arrayState = self.state.openedFiles;
           arrayState.push(respMap)
           self.setState({ openedFiles: arrayState });
-          self.selectCode(resp.id)    
+          self.selectCode(resp.id)   
+          self.appendTab(resp.id) 
+          self.highlightSelectedTab(resp.id) 
+          console.log(arrayState)
         return 1;
       })
       .catch(function (error) {
@@ -51,9 +106,6 @@ class NodeView extends Component {
   appendCode = async (t) => {
     var id = t.path[0].getAttribute('data-id');
     await this.getCodeFromApi(id);
-    console.log(this.state.openedFiles)
-    //this.selectCode()
-    //codeMirror[0].innerText = 'djdjai'
     this.highlightSelected(t.path[1])
   }
   checkIfFileOpened = (id) => {
@@ -69,6 +121,30 @@ class NodeView extends Component {
     return val;
 
   }
+  getCode = (id) => {
+    var elem;
+    var opened = this.state.openedFiles;
+
+    opened.forEach(element => {
+      // eslint-disable-next-line
+      if(element.id == id){
+        elem = element;
+      }
+    });
+    if(elem != null){
+      return elem;
+    }else{
+      return null;
+    }
+  }
+  deleteCode = (id) => {
+    var opened = this.state.openedFiles;
+    for(var i = 0 ; i<opened.length; i++){
+      if(opened[i].id == id){
+        opened.splice(i,1)
+      }
+    }
+  }
   selectCode = (id) => {
     var editor = document.querySelector('.CodeMirror').CodeMirror;
     var elem;
@@ -83,7 +159,6 @@ class NodeView extends Component {
     if(elem != null){
       editor.setValue(elem.content);
     }
-
   }
   highlightSelected = (elem) => {
     var elemList = document.getElementsByClassName('file-active');
@@ -91,6 +166,35 @@ class NodeView extends Component {
       elemList[i].classList.remove('file-active')
     }
     elem.classList.add('file-active')
+  }
+  highlightSelectedById = (id) => {
+    var elemList = document.getElementsByClassName('file-active');
+    var elem = document.getElementsByClassName('node');
+    for(var i = 0; i <  elemList.length; i++){
+      elemList[i].classList.remove('file-active')
+    }
+    for(i = 0; i < elem.length; i++){
+      // eslint-disable-next-line
+      if(elem[i].childNodes[1].getAttribute('data-id') == id){
+        elem[i].classList.add('file-active')
+      }
+    }
+  }
+  highlightSelectedTab = (id) => {
+    var elemList = document.getElementsByClassName('tab-active');
+    var elem = document.getElementsByClassName('tab');
+
+    for(var i = 0; i <  elemList.length; i++){
+      elemList[i].classList.remove('tab-active')
+    }
+    for(i = 0; i < elem.length; i++){
+      // eslint-disable-next-line      
+      if(elem[i].getAttribute('data-id') == id){
+        elem[i].classList.add('tab-active')
+        return elem[i];
+      }
+    }
+    
   }
   treeMount = (arr, elem = null) => {
     if(elem == null){
@@ -134,6 +238,7 @@ class NodeView extends Component {
         }else{
           
           childElement = document.createElement('li');
+          childElement.classList.add('node');
           iconElement = document.createElement('i')
           iconElement.classList.add('material-icons');
           iconElement.textContent = 'article';
@@ -151,7 +256,6 @@ class NodeView extends Component {
         }
     });
   }
-
   render() {
     return (
       <>

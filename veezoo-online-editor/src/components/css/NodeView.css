@@ -43,8 +43,10 @@ i.collapse{
     display: inline-flex;
     vertical-align: top;
 }
-.fileTreeRootNode{
+#fileTreeRootNode{
     overflow: auto;
+    height: 100%;
+    position: fixed;
 }
 .button-collapse{
     cursor: pointer;

@@ -53,15 +53,18 @@ class TopBar extends Component {
                 <img id="logo-img" height="40" src='/logo192.png' alt="node"/>
                 <span id="logo-title">Online Editor</span>
               </span>
-
+              <span id="tab-wrapper">
+                
+                
+              </span>
               <span id="btn-wrapper">
                 <button onClick={this.saveOnApi} className="button"><i className="material-icons">save</i></button>
                 <button onClick={this.deleteOnApi} className="button"><i className="material-icons">delete</i></button>
               </span>
               
             </div>
-            <div className='breadcrumb'>
-            </div>
+            {/* <div className='breadcrumb'>
+            </div> */}
           </>
         )
     }
