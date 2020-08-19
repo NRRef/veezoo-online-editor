@@ -137,6 +137,7 @@ class NodeView extends Component {
   deleteCode = (id) => {
     var opened = this.state.openedFiles;
     for(var i = 0 ; i<opened.length; i++){
+      // eslint-disable-next-line
       if(opened[i].id == id){
         opened.splice(i,1)
       }

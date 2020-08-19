@@ -15,10 +15,11 @@ class TopBar extends Component {
           content: editor
         })
         .then(function (response) {
-          
+          alert('sucess')
           return 1;
         })
         .catch(function (error) {
+          alert('error')
           console.log(error);
         });
 
@@ -32,10 +33,11 @@ class TopBar extends Component {
         await axios
         .delete("https://my-json-server.typicode.com/open-veezoo/editor/files/" + id)
         .then(function (response) {
-          
+          alert('sucess')
           return 1;
         })
         .catch(function (error) {
+          alert('error')
           console.log(error);
         });
 
