@@ -1,0 +1,11 @@
+#editor-area{
+    top: 74px;
+    left: 300px;
+    bottom: 0px;
+    right: 0px;
+    position: fixed;
+    
+}
+.CodeMirror {
+    border-radius: 0px !important;
+}
