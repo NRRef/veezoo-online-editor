@@ -1,6 +1,6 @@
 # veezoo-online-editor
 
-Online code editor for the role at Veezoo.
+Online code [editor](https://github.com/open-veezoo/editor) for the role at Veezoo.
 
 ## Instalation
 
